@@ -2,52 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Game of Zev - A Twisted Tetris Experience</title>
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-    <div class="scrolling-text-container">
-        <div class="scrolling-text top">Maybe I shouldn't have eaten those mushrooms before I started to play Tetris</div>
-        <div class="scrolling-text bottom">Maybe I shouldn't have eaten those mushrooms before I started to play Tetris</div>
-        <div class="scrolling-text left">Maybe I shouldn't have eaten those mushrooms before I started to play Tetris</div>
-        <div class="scrolling-text right">Maybe I shouldn't have eaten those mushrooms before I started to play Tetris</div>
-    </div>
-    
     <div id="game-container">
         <div class="game-header">
-            <h1 class="game-title">The Game of Zev</h1>
-        </div>
-        <div class="game-content">
-            <div id="game-info">
-                <div class="score-container">
-                    <p>Score: <span id="score">0</span></p>
-                    <p>Level: <span id="level">1</span></p>
-                    <p>Combo: <span id="combo">0</span></p>
-                </div>
-                <div class="next-piece-container">
-                    <h3>Next Piece</h3>
-                    <canvas id="next-piece-canvas" width="120" height="120"></canvas>
-                </div>
-                <div class="controls">
-                    <button id="start-button">Start Game</button>
-                    <button id="pause-button">Pause</button>
-                    <button id="restart-button" class="hidden">Restart</button>
-                    <button id="music-toggle">Music: On</button>
-                </div>
-                <div class="controls-legend">
-                    <h3>Controls:</h3>
-                    <p>← →: Move piece left/right</p>
-                    <p>↓: Move piece down</p>
-                    <p>↑: Rotate piece</p>
-                    <p>Space: Hard drop</p>
-                    <p>P: Pause game</p>
-                </div>
+            <div class="score-container">
+                <p>Score: <span id="score">0</span></p>
+                <p>Level: <span id="level">1</span></p>
             </div>
-            <canvas id="game-canvas" width="300" height="600"></canvas>
-            <div class="active-effects">
-                <h3>Active Effects</h3>
-                <ul id="effects-list"></ul>
+            <div class="audio-controls">
+                <button id="sound-toggle-btn">🔊</button>
+                <button id="music-toggle-btn">🎵</button>
+            </div>
+            <button id="menu-toggle">☰</button>
+        </div>
+        
+        <div class="game-content">
+            <canvas id="game-canvas"></canvas>
+            <div class="next-piece-container">
+                <canvas id="next-piece-canvas"></canvas>
+            </div>
+            
+            <div class="controls">
+                <button id="start-button">Start Game</button>
+                <button id="pause-button">Pause</button>
+                <button id="restart-button" class="hidden">Restart</button>
+            </div>
+            
+            <!-- Touch controls - Only visible on mobile -->
+            <div class="touch-controls">
+                <div class="touch-area" data-action="left">←</div>
+                <div class="touch-area" data-action="right">→</div>
+                <div class="touch-area" data-action="rotate">↻</div>
+                <div class="touch-area" data-action="down">↓</div>
             </div>
         </div>
     </div>

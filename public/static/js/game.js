@@ -6,6 +6,55 @@ const ctx = canvas.getContext('2d');
 const nextPieceCanvas = document.getElementById('next-piece-canvas');
 const nextPieceCtx = nextPieceCanvas.getContext('2d');
 
+// Set initial canvas size
+function resizeCanvas() {
+    const container = document.querySelector('.game-content');
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+    
+    // Calculate the best size that maintains aspect ratio
+    const aspectRatio = 2; // Height should be twice the width
+    let width = Math.min(containerWidth * 0.85, 320); // 85% of container width, max 320px
+    let height = width * aspectRatio;
+    
+    // Make sure height fits
+    if (height > containerHeight - 100) { // Leave room for controls
+        height = containerHeight - 100;
+        width = height / aspectRatio;
+    }
+    
+    // Set canvas size
+    canvas.width = Math.floor(width);
+    canvas.height = Math.floor(height);
+    
+    // Set next piece canvas size
+    nextPieceCanvas.width = 60;
+    nextPieceCanvas.height = 60;
+    
+    // Set cell size based on new dimensions
+    CELL_SIZE = Math.floor(width / GRID_WIDTH);
+    
+    // Force a redraw if game is running
+    if (typeof board !== 'undefined' && board) {
+        drawBoard();
+        if (currentPiece) {
+            drawPiece(currentPiece);
+        }
+        if (nextPiece) {
+            drawNextPiece();
+        }
+    }
+}
+
+// Add resize listeners
+window.addEventListener('resize', resizeCanvas);
+window.addEventListener('orientationchange', () => {
+    setTimeout(resizeCanvas, 100); // Small delay to ensure new dimensions are available
+});
+
+// Initialize canvas size
+resizeCanvas();
+
 // Game constants
 const GRID_WIDTH = 10;
 const GRID_HEIGHT = 20;
@@ -1263,55 +1312,50 @@ document.getElementById('restart-button-gameover').addEventListener('click', () 
 
 // Start the game
 function startGame() {
-    // Reset game state
+    // Reset canvas size
+    resizeCanvas();
+    
+    // Clear the board
     board = createEmptyBoard();
+    
+    // Reset game state
     score = 0;
     level = 1;
     linesCleared = 0;
-    isPaused = false;
     gameOver = false;
+    isPaused = false;
     dropSpeed = 1000;
-    isGravityFlipped = false;
-    isDrunkControls = false;
-    ghostBlocks = [];
-    pieceRotation = 0;
-    rainbowHue = 0;
-    trailParticles = [];
-    dimensionAngle = 0;
-    realityStability = 1;
-    timeWarpFactor = 1;
-    fractals = [];
-    voidPortals = [];
-    colorSynesthesia = 0;
     
-    // Clear any active twists
+    // Clear any active effects
     clearActiveTwist();
-    
-    // Hide game over screen
-    document.getElementById('game-over-screen').classList.add('hidden');
     
     // Update UI
     document.getElementById('score').textContent = score;
     document.getElementById('level').textContent = level;
-    document.getElementById('pause-button').textContent = 'Pause';
-    document.getElementById('combo').textContent = '0';
     
-    // Initialize pieces
-    nextPiece = getRandomPiece();
+    // Hide game over screen if visible
+    document.getElementById('game-over-screen').classList.add('hidden');
+    
+    // Create first pieces
     currentPiece = getRandomPiece();
-    currentPiece.position.y = -4; // Start higher up
+    nextPiece = getRandomPiece();
     
-    // Reset interval
+    // Clear any existing game interval
     if (gameInterval) {
         clearInterval(gameInterval);
     }
+    
+    // Start game loop
     gameInterval = setInterval(update, dropSpeed);
     
-    // Start background music
-    playSound('bgMusic');
+    // Draw initial state
+    drawBoard();
+    drawNextPiece();
     
-    // Initial draw
-    draw();
+    // Start music if enabled
+    if (isMusicEnabled) {
+        playSound('bgMusic');
+    }
 }
 
 // Add a CSS class for the shake effect
@@ -1524,4 +1568,115 @@ function movePiece(dx, dy) {
             });
         }
     }
-} 
+}
+
+// Mobile touch controls
+function initTouchControls() {
+    const touchControls = document.querySelector('.touch-controls');
+    if (!touchControls) return;
+
+    // Force touch controls to be visible on mobile
+    if (window.matchMedia('(max-width: 768px)').matches) {
+        touchControls.style.display = 'grid';
+    }
+
+    const touchAreas = document.querySelectorAll('.touch-area');
+    touchAreas.forEach(area => {
+        let touchTimer = null;
+        let isPressed = false;
+
+        const performAction = () => {
+            if (!isPressed || gameOver || isPaused) return;
+            
+            const action = area.dataset.action;
+            switch(action) {
+                case 'left':
+                    if (!checkCollision(currentPiece, -1, 0)) {
+                        currentPiece.position.x -= 1;
+                        playSound('move');
+                    }
+                    break;
+                case 'right':
+                    if (!checkCollision(currentPiece, 1, 0)) {
+                        currentPiece.position.x += 1;
+                        playSound('move');
+                    }
+                    break;
+                case 'down':
+                    if (!checkCollision(currentPiece, 0, 1)) {
+                        currentPiece.position.y += 1;
+                        score += 1;
+                        document.getElementById('score').textContent = score;
+                        playSound('move');
+                    }
+                    break;
+                case 'rotate':
+                    const rotated = rotate(currentPiece, 1);
+                    if (!checkCollision(currentPiece, 0, 0, rotated)) {
+                        currentPiece.matrix = rotated;
+                        playSound('rotate');
+                    }
+                    break;
+            }
+            draw();
+        };
+
+        // Handle touch start
+        area.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            isPressed = true;
+            area.style.transform = 'scale(0.95)';
+            performAction();
+            
+            // Repeat action while held (except for rotate)
+            if (area.dataset.action !== 'rotate') {
+                touchTimer = setInterval(performAction, 100);
+            }
+        }, { passive: false });
+
+        // Handle touch end and cancel
+        ['touchend', 'touchcancel', 'touchleave'].forEach(evt => {
+            area.addEventListener(evt, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                isPressed = false;
+                area.style.transform = 'scale(1)';
+                if (touchTimer) {
+                    clearInterval(touchTimer);
+                    touchTimer = null;
+                }
+            }, { passive: false });
+        });
+    });
+}
+
+// Initialize touch controls when the game starts
+window.addEventListener('load', initTouchControls);
+
+// Reinitialize touch controls when orientation changes
+window.addEventListener('orientationchange', () => {
+    setTimeout(initTouchControls, 300);
+});
+
+// Menu toggle functionality
+const menuToggle = document.getElementById('menu-toggle');
+const controls = document.querySelector('.controls');
+
+menuToggle.addEventListener('click', () => {
+    controls.classList.toggle('show');
+});
+
+// Hide menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!controls.contains(e.target) && e.target !== menuToggle) {
+        controls.classList.remove('show');
+    }
+});
+
+// Hide menu when starting game or after action
+['start-button', 'pause-button', 'restart-button'].forEach(id => {
+    document.getElementById(id)?.addEventListener('click', () => {
+        controls.classList.remove('show');
+    });
+}); 

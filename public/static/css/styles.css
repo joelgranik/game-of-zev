@@ -1,14 +1,18 @@
-body {
+/* Reset and base styles */
+* {
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: url('/static/images/psychedelic-landscape.jpg') no-repeat center center fixed;
-    background-size: cover;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background: #000;
     font-family: 'Press Start 2P', cursive;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 @keyframes psychedelicBackground {
@@ -21,97 +25,126 @@ body {
 }
 
 #game-container {
-    position: relative;
-    background-color: rgba(16, 16, 32, 0.85);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.game-header {
+    height: 40px;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    border-bottom: 1px solid rgba(233, 69, 96, 0.3);
+}
+
+/* Game Content */
+.game-content {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 10px;
+    min-height: 0; /* Critical for proper flex behavior */
 }
 
-.game-header {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.game-content {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    flex-wrap: nowrap;
-}
-
-#game-info {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    min-width: 200px;
-}
-
+/* Canvas Styling */
 #game-canvas {
-    border: 2px solid #ffffff;
-    border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.2);
+    background: #000;
+    border: 1px solid rgba(233, 69, 96, 0.3);
+    box-shadow: 0 0 10px rgba(233, 69, 96, 0.2);
+    max-height: calc(100vh - 120px);
+    touch-action: none;
+}
+
+/* Next Piece Preview */
+.next-piece-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 5px;
+    border: 1px solid rgba(233, 69, 96, 0.3);
 }
 
 #next-piece-canvas {
-    border: 2px solid #ffffff;
-    border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.2);
+    width: 60px;
+    height: 60px;
+    background: #000;
 }
 
+/* Touch Controls */
+.touch-controls {
+    width: 100%;
+    height: 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(0, 0, 0, 0.9);
+    margin-top: auto;
+}
+
+.touch-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(233, 69, 96, 0.2);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 24px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.touch-area:active {
+    background: rgba(233, 69, 96, 0.4);
+}
+
+/* Score Display */
 .score-container {
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 15px;
-    border-radius: 5px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    gap: 15px;
 }
 
 .score-container p {
-    margin: 5px 0;
-    font-size: 1.2em;
-    color: #ffffff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-.controls {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-    position: relative;
-    z-index: 1;
-}
-
-button {
-    background-color: #e94560;
+    margin: 0;
     color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    font-size: 12px;
+}
+
+/* Audio Controls */
+.audio-controls {
+    display: flex;
+    gap: 5px;
+}
+
+#sound-toggle-btn,
+#music-toggle-btn {
+    width: 32px;
+    height: 32px;
+    background: rgba(233, 69, 96, 0.2);
+    border: 1px solid rgba(233, 69, 96, 0.3);
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.3s;
 }
 
-button:hover {
-    background-color: #ff6b6b;
-}
-
-.hidden {
-    display: none;
-}
-
+/* Game Over Screen */
 #game-over-screen {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -119,86 +152,114 @@ button:hover {
 }
 
 .game-over-content {
-    background-color: #16213e;
-    padding: 40px;
-    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.95);
+    padding: 20px;
+    border-radius: 8px;
     text-align: center;
+    color: white;
+    border: 1px solid rgba(233, 69, 96, 0.3);
 }
 
 .game-over-content h2 {
     color: #e94560;
-    font-size: 2em;
-    margin-bottom: 20px;
+    margin: 0 0 20px 0;
+    text-shadow: 0 0 10px rgba(233, 69, 96, 0.6);
 }
 
-.controls-legend {
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+.hidden {
+    display: none !important;
 }
 
-.controls-legend h3 {
-    margin-top: 0;
-    margin-bottom: 10px;
+/* Controls */
+.controls {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    padding: 20px;
+    border-radius: 8px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.controls.show {
+    display: flex;
+}
+
+.controls button {
+    padding: 10px 20px;
+    background: rgba(233, 69, 96, 0.2);
+    border: 1px solid rgba(233, 69, 96, 0.3);
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* iPhone-specific adjustments */
+@media screen and (max-width: 380px) {
+    .touch-controls {
+        height: 50px;
+    }
+    
+    .score-container p {
+        font-size: 10px;
+    }
+}
+
+/* Hide touch controls on desktop */
+@media screen and (min-width: 768px) {
+    .touch-controls {
+        display: none;
+    }
+}
+
+/* Animations */
+@keyframes glowPulse {
+    0% { text-shadow: 0 0 10px rgba(233, 69, 96, 0.6); }
+    50% { text-shadow: 0 0 20px rgba(233, 69, 96, 0.8); }
+    100% { text-shadow: 0 0 10px rgba(233, 69, 96, 0.6); }
+}
+
+@keyframes buttonGlow {
+    0% { box-shadow: 0 0 5px rgba(233, 69, 96, 0.3); }
+    50% { box-shadow: 0 0 10px rgba(233, 69, 96, 0.5); }
+    100% { box-shadow: 0 0 5px rgba(233, 69, 96, 0.3); }
+}
+
+.game-title {
     color: #e94560;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    font-size: 2.5em;
+    margin: 0;
+    text-shadow: 0 0 10px rgba(233, 69, 96, 0.6),
+                 0 0 20px rgba(255, 255, 255, 0.4);
+    font-weight: bold;
+    letter-spacing: 2px;
+    animation: glowPulse 2s infinite;
+}
+
+@keyframes glowPulse {
+    0% { text-shadow: 0 0 10px rgba(233, 69, 96, 0.6), 0 0 20px rgba(255, 255, 255, 0.4); }
+    50% { text-shadow: 0 0 20px rgba(233, 69, 96, 0.8), 0 0 30px rgba(255, 255, 255, 0.6); }
+    100% { text-shadow: 0 0 10px rgba(233, 69, 96, 0.6), 0 0 20px rgba(255, 255, 255, 0.4); }
+}
+
+.next-piece-container h3 {
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8),
+                 0 0 10px rgba(240, 165, 0, 0.6);
+    margin-bottom: 10px;
     font-size: 1.2em;
 }
 
-.controls-legend p {
-    margin: 5px 0;
-    font-size: 1em;
+.active-effects h3 {
+    margin: 0 0 10px 0;
     color: #ffffff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-.active-effects {
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 15px;
-    border-radius: 5px;
-    max-height: 200px;
-    overflow-y: auto;
-    width: 180px;
-    z-index: 1;
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    align-self: flex-start;
-}
-
-#effects-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-#effects-list li {
-    margin: 5px 0;
-    padding: 8px 12px;
-    background-color: rgba(233, 69, 96, 0.3);
-    border-radius: 6px;
-    font-size: 1em;
-    color: #ffffff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    border: 1px solid rgba(233, 69, 96, 0.3);
-    transition: all 0.3s ease;
-}
-
-#effects-list li:hover {
-    background-color: rgba(233, 69, 96, 0.3);
-    transform: translateX(2px);
-}
-
-@keyframes glow {
-    0% { box-shadow: 0 0 5px #e94560; }
-    50% { box-shadow: 0 0 20px #e94560; }
-    100% { box-shadow: 0 0 5px #e94560; }
-}
-
-.glowing {
-    animation: glow 2s infinite;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8),
+                 0 0 10px rgba(240, 165, 0, 0.6);
+    font-size: 1.2em;
 }
 
 /* Game instructions styles */
@@ -290,67 +351,3 @@ button:hover {
     100% { transform: translateY(100%) translateX(50%); }
 }
 
-/* Style for sound and music toggle buttons */
-#sound-toggle-btn,
-#music-toggle-btn {
-    position: fixed;
-    top: 10px;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    padding: 8px 12px;
-    border-radius: 5px;
-    font-size: 24px;
-    cursor: pointer;
-    z-index: 1000;
-    backdrop-filter: blur(5px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-}
-
-#sound-toggle-btn:hover,
-#music-toggle-btn:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-1px);
-}
-
-#sound-toggle-btn {
-    right: 60px;
-}
-
-#music-toggle-btn {
-    right: 10px;
-}
-
-.game-title {
-    color: #e94560;
-    font-size: 2.5em;
-    margin: 0;
-    text-shadow: 0 0 10px rgba(233, 69, 96, 0.6),
-                 0 0 20px rgba(255, 255, 255, 0.4);
-    font-weight: bold;
-    letter-spacing: 2px;
-    animation: glowPulse 2s infinite;
-}
-
-@keyframes glowPulse {
-    0% { text-shadow: 0 0 10px rgba(233, 69, 96, 0.6), 0 0 20px rgba(255, 255, 255, 0.4); }
-    50% { text-shadow: 0 0 20px rgba(233, 69, 96, 0.8), 0 0 30px rgba(255, 255, 255, 0.6); }
-    100% { text-shadow: 0 0 10px rgba(233, 69, 96, 0.6), 0 0 20px rgba(255, 255, 255, 0.4); }
-}
-
-.next-piece-container h3 {
-    color: #ffffff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8),
-                 0 0 10px rgba(240, 165, 0, 0.6);
-    margin-bottom: 10px;
-    font-size: 1.2em;
-}
-
-.active-effects h3 {
-    margin: 0 0 10px 0;
-    color: #ffffff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8),
-                 0 0 10px rgba(240, 165, 0, 0.6);
-    font-size: 1.2em;
-}
