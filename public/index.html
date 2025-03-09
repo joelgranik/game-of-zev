@@ -15,36 +15,40 @@
     </div>
     
     <div id="game-container">
-        <h1 class="game-title">The Game of Zev</h1>
-        <div id="game-info">
-            <div class="score-container">
-                <p>Score: <span id="score">0</span></p>
-                <p>Level: <span id="level">1</span></p>
-                <p>Combo: <span id="combo">0</span></p>
-            </div>
-            <div class="next-piece-container">
-                <h3>Next Piece</h3>
-                <canvas id="next-piece-canvas" width="120" height="120"></canvas>
-            </div>
-            <div class="controls">
-                <button id="start-button">Start Game</button>
-                <button id="pause-button">Pause</button>
-                <button id="restart-button" class="hidden">Restart</button>
-                <button id="music-toggle">Music: On</button>
-            </div>
-            <div class="controls-legend">
-                <h3>Controls:</h3>
-                <p>← →: Move piece left/right</p>
-                <p>↓: Move piece down</p>
-                <p>↑: Rotate piece</p>
-                <p>Space: Hard drop</p>
-                <p>P: Pause game</p>
-            </div>
+        <div class="game-header">
+            <h1 class="game-title">The Game of Zev</h1>
         </div>
-        <canvas id="game-canvas" width="300" height="600"></canvas>
-        <div class="active-effects">
-            <h3>Active Effects</h3>
-            <ul id="effects-list"></ul>
+        <div class="game-content">
+            <div id="game-info">
+                <div class="score-container">
+                    <p>Score: <span id="score">0</span></p>
+                    <p>Level: <span id="level">1</span></p>
+                    <p>Combo: <span id="combo">0</span></p>
+                </div>
+                <div class="next-piece-container">
+                    <h3>Next Piece</h3>
+                    <canvas id="next-piece-canvas" width="120" height="120"></canvas>
+                </div>
+                <div class="controls">
+                    <button id="start-button">Start Game</button>
+                    <button id="pause-button">Pause</button>
+                    <button id="restart-button" class="hidden">Restart</button>
+                    <button id="music-toggle">Music: On</button>
+                </div>
+                <div class="controls-legend">
+                    <h3>Controls:</h3>
+                    <p>← →: Move piece left/right</p>
+                    <p>↓: Move piece down</p>
+                    <p>↑: Rotate piece</p>
+                    <p>Space: Hard drop</p>
+                    <p>P: Pause game</p>
+                </div>
+            </div>
+            <canvas id="game-canvas" width="300" height="600"></canvas>
+            <div class="active-effects">
+                <h3>Active Effects</h3>
+                <ul id="effects-list"></ul>
+            </div>
         </div>
     </div>
     
