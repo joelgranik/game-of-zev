@@ -9,16 +9,16 @@ body {
     align-items: center;
     min-height: 100vh;
     overflow: hidden;
-    animation: psychedelicBackground 20s linear infinite;
+    animation: psychedelicBackground 10s linear infinite;
 }
 
 @keyframes psychedelicBackground {
-    0% { background-color: #16213e; }
-    20% { background-color: #2a1b3d; }
-    40% { background-color: #1b3d2a; }
-    60% { background-color: #3d2a1b; }
-    80% { background-color: #3d1b2a; }
-    100% { background-color: #16213e; }
+    0% { background-color: #2a1b3d; }
+    20% { background-color: #3d1b2a; }
+    40% { background-color: #2a3d1b; }
+    60% { background-color: #1b2a3d; }
+    80% { background-color: #3d2a1b; }
+    100% { background-color: #2a1b3d; }
 }
 
 #game-container {
@@ -172,12 +172,14 @@ button:hover {
 /* Scrolling text styles */
 .scrolling-text {
     position: absolute;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.8);
     white-space: nowrap;
-    font-size: 24px;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
-    font-weight: normal;
+    font-size: 32px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.6),
+                 0 0 20px rgba(233, 69, 96, 0.6);
+    font-weight: bold;
     animation-duration: 20s;
+    z-index: 100;
 }
 
 .scrolling-text.top {

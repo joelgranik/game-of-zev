@@ -1336,8 +1336,10 @@ document.head.appendChild(style);
 
 // Initialize the game on window load
 window.onload = () => {
-    // Hide game over screen initially
-    document.getElementById('game-over-screen').classList.add('hidden');
+    // Hide game over screen initially and ensure it stays hidden
+    const gameOverScreen = document.getElementById('game-over-screen');
+    gameOverScreen.classList.add('hidden');
+    gameOverScreen.style.display = 'none';  // Force hide with inline style
     
     // Add music toggle functionality
     const musicToggleBtn = document.getElementById('music-toggle');
@@ -1379,9 +1381,8 @@ window.onload = () => {
         document.querySelector('.active-effects')
     );
 
-    // Preload everything before showing the start screen
-    draw();
-    drawNextPiece();
+    // Start a new game automatically
+    startGame();
     
     // Start animation loop
     requestAnimationFrame(draw);
