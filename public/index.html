@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
+    <div class="scrolling-text-container">
+        <div class="scrolling-text top">Maybe I shouldn't have eaten those mushrooms before I started to play Tetris</div>
+        <div class="scrolling-text bottom">Maybe I shouldn't have eaten those mushrooms before I started to play Tetris</div>
+        <div class="scrolling-text left">Maybe I shouldn't have eaten those mushrooms before I started to play Tetris</div>
+        <div class="scrolling-text right">Maybe I shouldn't have eaten those mushrooms before I started to play Tetris</div>
+    </div>
+    
     <div id="game-container">
         <div id="game-info">
             <div class="score-container">
@@ -22,6 +29,7 @@
                 <button id="start-button">Start Game</button>
                 <button id="pause-button">Pause</button>
                 <button id="restart-button" class="hidden">Restart</button>
+                <button id="music-toggle">Music: On</button>
             </div>
             <div class="active-effects">
                 <h3>Active Effects</h3>
@@ -30,6 +38,7 @@
         </div>
         <canvas id="game-canvas" width="300" height="600"></canvas>
     </div>
+    
     <div id="game-over-screen" class="hidden">
         <div class="game-over-content">
             <h2>Game Over!</h2>

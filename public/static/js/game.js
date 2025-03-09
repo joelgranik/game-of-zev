@@ -539,20 +539,45 @@ function createNewPiece() {
     currentPiece = nextPiece || getRandomPiece();
     nextPiece = getRandomPiece();
     
+    // Reset position to top center, higher up
+    currentPiece.position = {
+        x: Math.floor(GRID_WIDTH / 2) - Math.floor(currentPiece.matrix[0].length / 2),
+        y: -4  // Start higher up to prevent immediate collision
+    };
+    
     // Draw next piece
     drawNextPiece();
+    
+    // Only check for game over if the piece is fully in the visible board
+    if (currentPiece.position.y >= 0) {
+        let collision = false;
+        // Check each cell of the piece
+        for (let y = 0; y < currentPiece.matrix.length; y++) {
+            for (let x = 0; x < currentPiece.matrix[y].length; x++) {
+                if (currentPiece.matrix[y][x] !== 0) {
+                    const boardY = currentPiece.position.y + y;
+                    if (boardY >= 0 && board[boardY][currentPiece.position.x + x] !== 0) {
+                        collision = true;
+                        break;
+                    }
+                }
+            }
+            if (collision) break;
+        }
+        
+        if (collision) {
+            gameOver = true;
+            clearInterval(gameInterval);
+            document.getElementById('game-over-screen').classList.remove('hidden');
+            document.getElementById('final-score').textContent = score;
+            playSound('gameOver');
+            return;
+        }
+    }
     
     // Increase chance of twists
     if (Math.random() < twistProbability) {
         triggerRandomTwist();
-    }
-    
-    // Sometimes trigger multiple twists!
-    if (Math.random() < 0.1) {
-        setTimeout(() => {
-            triggerRandomTwist();
-            displayTwistMessage("Double trouble!");
-        }, 500);
     }
 }
 
@@ -1269,9 +1294,10 @@ function startGame() {
     document.getElementById('pause-button').textContent = 'Pause';
     document.getElementById('combo').textContent = '0';
     
-    // Create new pieces
+    // Initialize pieces
     nextPiece = getRandomPiece();
-    createNewPiece();
+    currentPiece = getRandomPiece();
+    currentPiece.position.y = -4; // Start higher up
     
     // Reset interval
     if (gameInterval) {
@@ -1305,62 +1331,31 @@ style.innerHTML = `
     .shake {
         animation: shake 0.5s infinite;
     }
-
-    @keyframes scrollHorizontal {
-        0% { transform: translateX(100%); }
-        100% { transform: translateX(-100%); }
-    }
-
-    @keyframes scrollVertical {
-        0% { transform: translateY(-100%); }
-        100% { transform: translateY(100%); }
-    }
-    
-    .scrolling-text {
-        position: fixed;
-        white-space: nowrap;
-        color: #FF00FF;
-        font-size: 24px;
-        font-weight: bold;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-    }
-
-    .scrolling-text.top {
-        top: 10px;
-        animation: scrollHorizontal 15s linear infinite;
-    }
-
-    .scrolling-text.bottom {
-        bottom: 10px;
-        animation: scrollHorizontal 15s linear infinite reverse;
-    }
-
-    .scrolling-text.left {
-        left: 10px;
-        transform-origin: left top;
-        transform: rotate(90deg);
-        animation: scrollVertical 15s linear infinite;
-    }
-
-    .scrolling-text.right {
-        right: 10px;
-        transform-origin: right top;
-        transform: rotate(-90deg);
-        animation: scrollVertical 15s linear infinite reverse;
-    }
 `;
 document.head.appendChild(style);
 
 // Initialize the game on window load
 window.onload = () => {
-    // Create scrolling text for all sides
-    const positions = ['top', 'bottom', 'left', 'right'];
-    positions.forEach(position => {
-        const scrollingText = document.createElement('div');
-        scrollingText.className = `scrolling-text ${position}`;
-        scrollingText.textContent = "Maybe I shouldn't have eaten those mushrooms before I started to play Tetris";
-        document.body.appendChild(scrollingText);
+    // Add music toggle functionality
+    const musicToggleBtn = document.getElementById('music-toggle');
+    musicToggleBtn.addEventListener('click', () => {
+        isMusicEnabled = !isMusicEnabled;
+        musicToggleBtn.textContent = `Music: ${isMusicEnabled ? 'On' : 'Off'}`;
+        
+        if (!isMusicEnabled) {
+            // Stop music
+            if (bgMusicNode) {
+                bgMusicNode.stop();
+                bgMusicNode = null;
+            }
+            if (musicSchedulerTimer) {
+                clearTimeout(musicSchedulerTimer);
+                musicSchedulerTimer = null;
+            }
+        } else if (!gameOver) {
+            // Restart music if game is active
+            playSound('bgMusic');
+        }
     });
 
     // Preload everything before showing the start screen
