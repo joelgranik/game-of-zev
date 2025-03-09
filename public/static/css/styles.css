@@ -119,10 +119,9 @@ button:hover {
     border-radius: 5px;
     max-height: 150px;
     overflow-y: auto;
-    margin-top: 10px;
-    position: fixed;
-    top: 20px;
-    right: 20px;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
     width: 250px;
     z-index: 100;
     backdrop-filter: blur(5px);
@@ -250,4 +249,36 @@ button:hover {
 @keyframes scrollTopToBottom {
     0% { transform: translateY(-100%) translateX(50%); }
     100% { transform: translateY(100%) translateX(50%); }
+}
+
+/* Style for sound and music toggle buttons */
+#sound-toggle-btn,
+#music-toggle-btn {
+    position: fixed;
+    top: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+#sound-toggle-btn:hover,
+#music-toggle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+#sound-toggle-btn {
+    right: 60px;
+}
+
+#music-toggle-btn {
+    right: 10px;
 }

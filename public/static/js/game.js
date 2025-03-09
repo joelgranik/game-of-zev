@@ -271,18 +271,20 @@ function playSound(soundName) {
 
 // Add sound and music toggle buttons
 const soundToggleBtn = document.createElement('button');
-soundToggleBtn.textContent = '🔊';
-soundToggleBtn.style.cssText = 'position: absolute; top: 10px; right: 60px; font-size: 24px; background: none; border: none; cursor: pointer; color: white;';
+soundToggleBtn.id = 'sound-toggle-btn';
+soundToggleBtn.textContent = '🔊 Sound';
+soundToggleBtn.style.cssText = 'position: fixed; top: 10px; right: 120px; font-size: 16px; background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid rgba(255, 255, 255, 0.4); padding: 8px 12px; border-radius: 5px; cursor: pointer; backdrop-filter: blur(5px);';
 document.body.appendChild(soundToggleBtn);
 
 const musicToggleBtn = document.createElement('button');
-musicToggleBtn.textContent = '🎵';
-musicToggleBtn.style.cssText = 'position: absolute; top: 10px; right: 10px; font-size: 24px; background: none; border: none; cursor: pointer; color: white;';
+musicToggleBtn.id = 'music-toggle-btn';
+musicToggleBtn.textContent = '🎵 Music';
+musicToggleBtn.style.cssText = 'position: fixed; top: 10px; right: 10px; font-size: 16px; background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid rgba(255, 255, 255, 0.4); padding: 8px 12px; border-radius: 5px; cursor: pointer; backdrop-filter: blur(5px);';
 document.body.appendChild(musicToggleBtn);
 
 soundToggleBtn.addEventListener('click', () => {
     isSoundEnabled = !isSoundEnabled;
-    soundToggleBtn.textContent = isSoundEnabled ? '🔊' : '🔈';
+    soundToggleBtn.textContent = isSoundEnabled ? '🔊 Sound' : '🔈 Sound';
     if (!isSoundEnabled) {
         stopMusic();
     }
@@ -290,7 +292,7 @@ soundToggleBtn.addEventListener('click', () => {
 
 musicToggleBtn.addEventListener('click', () => {
     isMusicEnabled = !isMusicEnabled;
-    musicToggleBtn.textContent = isMusicEnabled ? '🎵' : '🎵';
+    musicToggleBtn.textContent = isMusicEnabled ? '🎵 Music' : '🎵 Music';
     if (isMusicEnabled) {
         playSound('bgMusic');
     } else {
@@ -1342,7 +1344,7 @@ window.onload = () => {
     gameOverScreen.style.display = 'none';  // Force hide with inline style
     
     // Add music toggle functionality
-    const musicToggleBtn = document.getElementById('music-toggle');
+    const musicToggleBtn = document.getElementById('music-toggle-btn');
     musicToggleBtn.addEventListener('click', () => {
         isMusicEnabled = !isMusicEnabled;
         musicToggleBtn.textContent = `Music: ${isMusicEnabled ? 'On' : 'Off'}`;
@@ -1381,11 +1383,9 @@ window.onload = () => {
         document.querySelector('.active-effects')
     );
 
-    // Start a new game automatically
-    startGame();
-    
-    // Start animation loop
-    requestAnimationFrame(draw);
+    // Initialize board but don't start game automatically
+    board = createEmptyBoard();
+    draw();
 };
 
 // New function to draw void portals
