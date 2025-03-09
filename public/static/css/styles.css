@@ -5,7 +5,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('../images/psychedelic-landscape.jpg') no-repeat center center fixed;
+    background: url('/public/static/images/psychedelic-landscape.jpg') no-repeat center center fixed;
     background-size: cover;
     font-family: 'Press Start 2P', cursive;
     overflow: hidden;
@@ -337,4 +337,20 @@ button:hover {
     0% { text-shadow: 0 0 10px rgba(233, 69, 96, 0.6), 0 0 20px rgba(255, 255, 255, 0.4); }
     50% { text-shadow: 0 0 20px rgba(233, 69, 96, 0.8), 0 0 30px rgba(255, 255, 255, 0.6); }
     100% { text-shadow: 0 0 10px rgba(233, 69, 96, 0.6), 0 0 20px rgba(255, 255, 255, 0.4); }
+}
+
+.next-piece-container h3 {
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8),
+                 0 0 10px rgba(240, 165, 0, 0.6);
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.active-effects h3 {
+    margin: 0 0 10px 0;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8),
+                 0 0 10px rgba(240, 165, 0, 0.6);
+    font-size: 1.2em;
 }
