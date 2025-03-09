@@ -8,22 +8,10 @@
     ],
     "routes": [
         {
-            "src": "/static/(.*)",
-            "headers": {
-                "cache-control": "public, max-age=31536000, immutable",
-                "Access-Control-Allow-Origin": "*"
-            },
-            "dest": "/static/$1"
+            "handle": "filesystem"
         },
         {
-            "src": "/(.*)\\.(?:mp3|js|css|jpg|png|ico)$",
-            "headers": {
-                "cache-control": "public, max-age=31536000, immutable"
-            },
-            "dest": "/$1.$2"
-        },
-        {
-            "src": "/(.*)",
+            "src": "/.*",
             "dest": "/index.html"
         }
     ]
