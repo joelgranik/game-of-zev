@@ -80,13 +80,13 @@ const FUNNY_MESSAGES = [
 
 // Sound effects
 const SOUNDS = {
-    move: new Audio('static/sounds/move.mp3'),
-    rotate: new Audio('static/sounds/rotate.mp3'),
-    drop: new Audio('static/sounds/drop.mp3'),
-    clear: new Audio('static/sounds/clear.mp3'),
-    gameOver: new Audio('static/sounds/gameOver.mp3'),
-    twist: new Audio('static/sounds/twist.mp3'),
-    levelUp: new Audio('static/sounds/levelUp.mp3')
+    move: new Audio('/static/sounds/move.mp3'),
+    rotate: new Audio('/static/sounds/rotate.mp3'),
+    drop: new Audio('/static/sounds/drop.mp3'),
+    clear: new Audio('/static/sounds/clear.mp3'),
+    gameOver: new Audio('/static/sounds/gameOver.mp3'),
+    twist: new Audio('/static/sounds/twist.mp3'),
+    levelUp: new Audio('/static/sounds/levelUp.mp3')
 };
 
 // Web Audio API setup
