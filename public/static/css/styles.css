@@ -5,7 +5,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('/public/static/images/psychedelic-landscape.jpg') no-repeat center center fixed;
+    background: url('../images/psychedelic-landscape.jpg') no-repeat center center fixed;
     background-size: cover;
     font-family: 'Press Start 2P', cursive;
     overflow: hidden;
@@ -64,14 +64,17 @@ body {
 }
 
 .score-container {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.7);
     padding: 15px;
     border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .score-container p {
     margin: 5px 0;
     font-size: 1.2em;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .controls {
@@ -129,25 +132,30 @@ button:hover {
 }
 
 .controls-legend {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.7);
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .controls-legend h3 {
     margin-top: 0;
     margin-bottom: 10px;
     color: #e94560;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    font-size: 1.2em;
 }
 
 .controls-legend p {
     margin: 5px 0;
-    font-size: 0.9em;
+    font-size: 1em;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .active-effects {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.7);
     padding: 15px;
     border-radius: 5px;
     max-height: 200px;
@@ -155,7 +163,7 @@ button:hover {
     width: 180px;
     z-index: 1;
     backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     align-self: flex-start;
 }
@@ -169,11 +177,11 @@ button:hover {
 #effects-list li {
     margin: 5px 0;
     padding: 8px 12px;
-    background-color: rgba(233, 69, 96, 0.2);
+    background-color: rgba(233, 69, 96, 0.3);
     border-radius: 6px;
-    font-size: 0.9em;
+    font-size: 1em;
     color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     border: 1px solid rgba(233, 69, 96, 0.3);
     transition: all 0.3s ease;
 }
