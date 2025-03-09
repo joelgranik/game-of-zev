@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Static File Test</title>
+</head>
+<body>
+    <h1>Testing Static Files</h1>
+    <audio id="test-audio" src="static/sounds/move.mp3" controls></audio>
+    <script>
+        fetch('static/sounds/move.mp3')
+            .then(response => {
+                console.log('Audio file response:', response.status);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    </script>
+</body>
+</html> 

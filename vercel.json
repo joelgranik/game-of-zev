@@ -8,11 +8,13 @@
     ],
     "routes": [
         {
-            "handle": "filesystem"
+            "src": "/static/(.*)",
+            "dest": "/$1"
         },
         {
-            "src": "/.*",
-            "dest": "/index.html"
+            "src": "/(.*)",
+            "dest": "/$1",
+            "continue": true
         }
     ]
 } 
