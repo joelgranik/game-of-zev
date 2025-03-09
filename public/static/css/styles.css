@@ -118,19 +118,36 @@ button:hover {
     margin-bottom: 20px;
 }
 
+.controls-legend {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.controls-legend h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #e94560;
+}
+
+.controls-legend p {
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+
 .active-effects {
     background-color: rgba(255, 255, 255, 0.1);
     padding: 15px;
     border-radius: 5px;
-    height: 600px;
+    max-height: 200px;
     overflow-y: auto;
-    width: 200px;
+    width: 180px;
     z-index: 1;
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: relative;
-    margin-top: 0;
+    align-self: flex-start;
 }
 
 #effects-list {
