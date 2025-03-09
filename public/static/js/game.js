@@ -1336,6 +1336,9 @@ document.head.appendChild(style);
 
 // Initialize the game on window load
 window.onload = () => {
+    // Hide game over screen initially
+    document.getElementById('game-over-screen').classList.add('hidden');
+    
     // Add music toggle functionality
     const musicToggleBtn = document.getElementById('music-toggle');
     musicToggleBtn.addEventListener('click', () => {
@@ -1357,6 +1360,24 @@ window.onload = () => {
             playSound('bgMusic');
         }
     });
+
+    // Create instructions element
+    const instructions = document.createElement('div');
+    instructions.className = 'game-instructions';
+    instructions.innerHTML = `
+        <h3>Controls:</h3>
+        <ul>
+            <li>← → : Move piece left/right</li>
+            <li>↓ : Move piece down</li>
+            <li>↑ : Rotate piece</li>
+            <li>Space : Hard drop</li>
+            <li>P : Pause game</li>
+        </ul>
+    `;
+    document.getElementById('game-info').insertBefore(
+        instructions,
+        document.querySelector('.active-effects')
+    );
 
     // Preload everything before showing the start screen
     draw();
