@@ -5,16 +5,5 @@
             "src": "**/*",
             "use": "@vercel/static"
         }
-    ],
-    "routes": [
-        {
-            "src": "/static/(.*)",
-            "dest": "/$1"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/$1",
-            "continue": true
-        }
     ]
 } 
